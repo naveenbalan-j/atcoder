@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) {
+        FastScanner scanner = new FastScanner();
+        
+        int n = scanner.nextInt();
+        long p = scanner.nextLong();
+        
+        long exponent = (long) n * (n - 1);
+        long result = power(2, exponent, p);
+        
+        System.out.println(result);
+    }
+    
+    private static long power(long base, long exp, long mod) {
+        long res = 1;
+        base = base % mod;
+        while (exp > 0) {
+            if ((exp & 1) == 1) {
+                res = (res * base) % mod;
+            }
+            base = (base * base) % mod;
+            exp >>= 1;
+        }
+        return res;
+    }
+    
+    static class FastScanner {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer("");
+        
+        String next() {
+            while (!st.hasMoreTokens()) {
+                try {
+                    String line = br.readLine();
+                    if (line == null) return null;
+                    st = new StringTokenizer(line);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+        
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+        
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+    }
+}
