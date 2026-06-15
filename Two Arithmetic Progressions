@@ -1,0 +1,40 @@
+public class ExtendedGCD {
+
+    static class Result {
+        long gcd;
+        long x;
+        long y;
+
+        Result(long gcd, long x, long y) {
+            this.gcd = gcd;
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public static Result extendedGCD(long a, long b) {
+        if (b == 0) {
+            return new Result(a, 1, 0);
+        }
+
+        Result temp = extendedGCD(b, a % b);
+
+        long currentX = temp.y;
+        long currentY = temp.x - (a / b) * temp.y;
+
+        return new Result(temp.gcd, currentX, currentY);
+    }
+
+    public static void main(String[] args) {
+        long a = 56;
+        long b = 15;
+
+        Result result = extendedGCD(a, b);
+
+        System.out.println("For equations of form: (a * x) + (b * y) = gcd(a, b)");
+        System.out.println("GCD(" + a + ", " + b + ") = " + result.gcd);
+        System.out.println("Coefficient x = " + result.x);
+        System.out.println("Coefficient y = " + result.y);
+        System.out.println("Verification: (" + a + " * " + result.x + ") + (" + b + " * " + result.y + ") = " + (a * result.x + b * result.y));
+    }
+}
